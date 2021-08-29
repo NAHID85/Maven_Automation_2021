@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression">
+    <test name="End to End Test" preserve-order="true">
+        <classes>
+            <class name="Day12_082221.Softassart_hardassart_example" />
+            <class name="Day12_082221.Yahoo_checkbox_assertion" />
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

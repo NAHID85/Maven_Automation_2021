@@ -1,0 +1,26 @@
+package Day13_082821;
+
+import Google_Page_Object_class.BaseClass;
+import Reusable_Classes.Reusable_Annatations_class_Html_Report;
+import org.testng.annotations.Test;
+
+public class Google_page_Object_class extends Reusable_Annatations_class_Html_Report {
+
+    @Test
+    public void SearchSomethingOnGoogleHome() throws InterruptedException {
+        driver.navigate().to("https://www.google.com");
+        Thread.sleep(2500);
+        BaseClass.homePage().searchAKeyword("Cars");
+        BaseClass.homePage().googleSearchSubmit();
+    }//end of test 1
+
+    @Test(dependsOnMethods = "SearchSomethingOnGoogleHome")
+    public void GetSearchNumber() throws InterruptedException {
+        Thread.sleep(2500);
+        BaseClass.searchResultPage().getSearchNumber();
+    }//end of test 2
+
+
+    }//end of java class
+
+
