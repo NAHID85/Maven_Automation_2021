@@ -35,7 +35,7 @@ public class Reusable_Methods_With_Logger {
     }//end of set driver method
 
     //method to capture screenshot when logger fails
-    public static void getScreenShot(WebDriver driver,String imageName,ExtentTest logger) {
+    public static void getScreenShot(WebDriver driver, String imageName, ExtentTest logger) {
         try {
             String fileName = imageName + ".png";
             String directory = null;
@@ -55,88 +55,94 @@ public class Reusable_Methods_With_Logger {
 
 
     //method to compare expected title with actual
-    public static void verifyPageTitle(WebDriver driver, String expectedTitle, ExtentTest logger){
+    public static void verifyPageTitle(WebDriver driver, String expectedTitle, ExtentTest logger) {
         //verifying the title using if else condition
         String actualTitle = driver.getTitle();
-        if(actualTitle.equals(expectedTitle)){
+        if (actualTitle.equals(expectedTitle)) {
             System.out.println("Title matches");
-            logger.log(LogStatus.PASS,"Title matches");
+            logger.log(LogStatus.PASS, "Title matches");
         } else {
             System.out.println("Title doesn't match " + actualTitle);
-            logger.log(LogStatus.FAIL,"Title doesn't match " + actualTitle);
+            logger.log(LogStatus.FAIL, "Title doesn't match " + actualTitle);
         }//end of get title condition
     }//end of verifyPageTitle
 
     //clear and enter a value using sendKeys
-    public static void sendKeysMethod(WebDriver driver,WebElement xpath,String userValue,String elementName, ExtentTest logger){
-        WebDriverWait wait = new WebDriverWait(driver,15);
-        try{
+    public static void sendKeysMethod(WebDriver driver, WebElement xpath, String userValue, String elementName, ExtentTest logger) {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        try {
             WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath));
             element.clear();
             element.sendKeys(userValue);
             System.out.println("Successfully entered a value on " + elementName);
-            logger.log(LogStatus.PASS,"Successfully entered a value on " + elementName);
+            logger.log(LogStatus.PASS, "Successfully entered a value on " + elementName);
         } catch (Exception err) {
             System.out.println("Unable to enter a value on " + elementName);
-            logger.log(LogStatus.FAIL,"Unable to enter a value on " + elementName);
-        }
+            logger.log(LogStatus.FAIL, "Unable to enter a value on " + elementName);
+        }getScreenShot(driver,elementName,logger);
     }//end of sendKeysMethod
 
     //click on pop up element
-    public static void clickIfPopupExist(WebDriver driver,String xpath,String elementName){
-        WebDriverWait wait = new WebDriverWait(driver,5);
-        try{
+    public static void clickIfPopupExist(WebDriver driver, WebElement xpath, String elementName, ExtentTest logger) {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        try {
             System.out.println("Clicking on " + elementName);
-            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath));
             element.click();
+            logger.log(LogStatus.PASS, "Successfully click on " + elementName);
         } catch (Exception err) {
             System.out.println("Popup didn't appear...Proceed to next step");
-
+            logger.log(LogStatus.FAIL, "Popup didn't appear...Proceed to next step " + elementName);
+            getScreenShot(driver, elementName, logger);
         }
     }//end of clickIfPopupExist
 
     //click on element
-    public static void clickMethod(WebDriver driver,String xpath,String elementName){
-        WebDriverWait wait = new WebDriverWait(driver,15);
-        try{
+    public static void clickMethod(WebDriver driver, WebElement xpath, String elementName, ExtentTest logger) {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        try {
             System.out.println("Clicking on " + elementName);
-            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath));
             element.click();
+            logger.log(LogStatus.PASS, "able to click on", elementName);
         } catch (Exception err) {
             System.out.println("Unable to click on " + elementName);
+            logger.log(LogStatus.FAIL, "Unable to click on ", elementName);
         }
+        getScreenShot(driver, elementName, logger);
     }//end of clickMethod
 
     //submit on element
-    public static void submitMethod(WebDriver driver,WebElement xpath,String elementName, ExtentTest logger){
-        WebDriverWait wait = new WebDriverWait(driver,15);
-        try{
+    public static void submitMethod(WebDriver driver, WebElement xpath, String elementName, ExtentTest logger) {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        try {
             WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath));
             element.submit();
             System.out.println("Successfully submitted on " + elementName);
-            logger.log(LogStatus.PASS,"Successfully submitted on " + elementName);
+            logger.log(LogStatus.PASS, "Successfully submitted on " + elementName);
         } catch (Exception err) {
             System.out.println("Unable to submit on " + elementName);
-            logger.log(LogStatus.FAIL,"Unable to submit on " + elementName);
+            logger.log(LogStatus.FAIL, "Unable to submit on " + elementName);
         }
     }//end of submitMethod
 
-    public static void selectMethod(WebDriver driver, String xpath, String choice, String elementName){
-        WebDriverWait wait = new WebDriverWait(driver,15);
-        try{
+    public static void selectMethod(WebDriver driver, WebElement xpath, String choice, String elementName,ExtentTest logger) {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        try {
             System.out.println("Selecting from dropdown menu " + elementName);
             //define object for the dropdown WebElement
-            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath));
             //define object for selection and pass it the dropdown object
             Select choiceSelect = new Select(element);
             //use selectByVisbibleText method on to the selection object and pass it the choice
             choiceSelect.selectByVisibleText(choice);
-        } catch(Exception err){
+            logger.log(LogStatus.PASS,"able to select from dropdown menu "+ elementName);
+        } catch (Exception err) {
             System.out.println("Unable to select from " + elementName + " " + err);
         }//end of try catch
     }//end of selectMethod
 
-    public static String getText(WebDriver driver, WebElement xpath, String elementName,ExtentTest logger) {
+    public static String getText(WebDriver driver, WebElement xpath, String elementName, ExtentTest logger) {
         WebDriverWait wait = new WebDriverWait(driver, 15);
         String Result = "";
         try {
@@ -144,11 +150,12 @@ public class Reusable_Methods_With_Logger {
             WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath));
             Result = element.getText();
             System.out.println("Result is " + Result);
-            logger.log(LogStatus.PASS,"Result is " + Result + " for " + elementName);
+            logger.log(LogStatus.PASS, "Result is " + Result + " for " + elementName);
         } catch (Exception err) {
             System.out.println("Unable to Get Text " + elementName);
-            logger.log(LogStatus.FAIL,"Unable to Get Text " + elementName);
-        }
+            logger.log(LogStatus.FAIL, "Unable to Get Text " + elementName);
+        }//getScreenShot(driver,elementName,logger);
+        getScreenShot(driver, elementName, logger);
         return Result;
     }//end of getText
 
@@ -157,36 +164,41 @@ public class Reusable_Methods_With_Logger {
         String Result = "";
         try {
             System.out.println(" Getting Text " + elementName);
-            WebElement element = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpath))).get(indexNumber);
+            // WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath)).getText(indexNumber);
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
             Result = element.getText();
             System.out.println("Result is " + Result);
         } catch (Exception err) {
             System.out.println("Unable to Get Text " + elementName);
         }
         return Result;
-    }//end of getTextByindex
+    }//end of getTextBy index
 
 
     //hover over an element
-    public static void mouseHover(WebDriver driver,String xpath,String elementName){
-        WebDriverWait wait = new WebDriverWait(driver,15);
+    public static void mouseHover(WebDriver driver, WebElement xpath, String elementName, ExtentTest logger) {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
         Actions actions = new Actions(driver);
-        try{
+        String Result = "";
+        try {
             System.out.println("Hovering on " + elementName);
-            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            WebElement element = wait.until(ExpectedConditions.visibilityOf(xpath));
             actions.moveToElement(element).perform();
+            logger.log(LogStatus.PASS, "Result is " + Result + " for " + elementName);
         } catch (Exception err) {
             System.out.println("Unable to hover on " + elementName);
+            logger.log(LogStatus.FAIL, "Unable to hover on " + elementName);
         }
+        getScreenShot(driver, elementName, logger);
     }//end of hover method
 
 
     //method to verify if checkbox is selected or not
-    public static void verifyStatusOfCheckbox(WebDriver driver,String xpath,boolean checkStatus, String elementName){
-        WebDriverWait wait = new WebDriverWait(driver,15);
-        try{
+    public static void verifyStatusOfCheckbox(WebDriver driver, String xpath, boolean checkStatus, String elementName ) {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        try {
             System.out.println("Verifying checkbox status of " + elementName);
-            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath))); ;
             boolean checkboxStatus = element.isSelected();
             if (checkboxStatus == checkStatus) {
                 System.out.println("Checkbox is selected as expected on " + elementName);
@@ -201,9 +213,7 @@ public class Reusable_Methods_With_Logger {
     //slider by SendKeys method
     public static void sliderSendKeysMethod(WebDriver driver, String xpath, int resetPoint, String desiredPoint, String elementName) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 15);
-
         try {
-
             //storing the WebElement as a variable
             WebElement slider = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
 
@@ -216,7 +226,6 @@ public class Reusable_Methods_With_Logger {
             for (int i = 0; i < resetPoint; i++) {
                 action.sendKeys(Keys.ARROW_LEFT).build().perform();
             }//end of reset
-
             Thread.sleep(1500);
 
             //desired loop
@@ -225,17 +234,11 @@ public class Reusable_Methods_With_Logger {
             for (int i = 0; i < intDesiredPoint; i++) {
                 action.sendKeys(Keys.ARROW_RIGHT).build().perform();
             }//end of desired
-
             Thread.sleep(1500);
-
         } catch (Exception e) {
-
             System.out.println("Unable to move the slider " + elementName + " " + e);
-
         }//end of slider by SendKeys method
-
     }//end of slider method
-
 }//end of java class
 
 

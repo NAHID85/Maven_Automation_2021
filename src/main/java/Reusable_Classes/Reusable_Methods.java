@@ -151,9 +151,7 @@ public class Reusable_Methods {
     //if we want it for use in exl sheet then have to change int desiredPoint to String desiredPoint
     public static void sliderSendKeysMethod(WebDriver driver, String xpath, int resetPoint, int desiredPoint, String elementName) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 15);
-
         try {
-
             //storing the WebElement as a variable
             WebElement slider = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
 
@@ -166,24 +164,18 @@ public class Reusable_Methods {
             for (int i = 0; i < resetPoint; i++) {
                 action.sendKeys(Keys.ARROW_LEFT).build().perform();
             }//end of reset
-
             Thread.sleep(1500);
 
             //desired loop
-            //converting String desierdPoint to integar
+            //converting String desired Point to integer
             //int intDesiredPoint =Integer.parseInt(desiredPoint);//for excel
             for (int i = 0; i < desiredPoint; i++) {
                 action.sendKeys(Keys.ARROW_RIGHT).build().perform();
             }//end of desired
-
             Thread.sleep(1500);
-
         } catch (Exception e) {
-
             System.out.println("Unable to move the slider " + elementName + " " + e);
-
         }//end of slider by SendKeys method
-
     }//end of slider method
 
 

@@ -100,6 +100,8 @@ public class Action_Item_uhc {
                 //to select and click medicare Plan from dropdown menu
                 System.out.println("Click on medicare plan to sign in");
                 WebElement medicarePlan = driver.findElement(By.xpath("//*[@aria-label='Medicare plan Opens a new window']"));
+                //"//*[contains(@aria-label,'Medicare plan Opens a new window')]"
+
                 //mouseMove.moveToElement(medicarePlan).click().perform();
                 medicarePlan.click();
                 Thread.sleep(1000);
@@ -116,7 +118,12 @@ public class Action_Item_uhc {
             try {
                 // click on register now
                 System.out.println("Click on register now ");
-               WebElement registerNow = driver.findElement(By.xpath("//*[@class='uhc-tempo-link uhc-tempo-link--medium registerBtn']"));
+                //click on register now
+                //the * in an xpath makes your script ignore the tag that element is in. if 2 elements have the same xpath locators, but are in different tags
+                //you can differentiate between them by putting the tag name instead of ignoring it with a *
+                //ReUsableMethods.clickMethod(driver,"//button[contains(text(),'Register Now')]","");
+
+                WebElement registerNow = driver.findElement(By.xpath("//*[@class='uhc-tempo-link uhc-tempo-link--medium registerBtn']"));
                registerNow.click();
                Thread.sleep(2000);
             } catch (Exception err) {
