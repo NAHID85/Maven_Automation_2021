@@ -27,7 +27,6 @@ public class Action_Item_uhc {
         Actions mouseMove = new Actions(driver);
 
         //create array lists
-
         ArrayList<String> FirstName = new ArrayList<>();
         FirstName.add("AYMAN");
         FirstName.add("ARYAN");

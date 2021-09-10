@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
-
 public class Tweeter_APITesting {
 
     String consumerKey = "bX4wOwzdPuFAAoyHgVJbM4piL";
@@ -45,9 +44,7 @@ public class Tweeter_APITesting {
          id = json.getString("id");
         //text
         String actualText = json.getString("text");
-
         System.out.println("My id is " + id + " and text is " + actualText);
-
     }//end of post a status method
 
     @Test(dependsOnMethods = "postAStatus")
@@ -63,9 +60,6 @@ public class Tweeter_APITesting {
         } else {
             System.out.println("Actual status code is " + response.statusCode());
         }
-
-
     }//end of delete recent post
-
 
 }//end of java class
